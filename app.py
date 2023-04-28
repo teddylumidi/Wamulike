@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask, request, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
@@ -26,7 +27,7 @@ def add_win():
     data = request.get_json()
     betting_site = data['betting_site']
     betting_id = data['betting_id']
-    date = data['date']
+    date = datetime.strptime(data['date'], '%Y-%m-%d').date()
     win = Win(betting_site=betting_site, betting_id=betting_id, date=date)
     db.session.add(win)
     db.session.commit()
